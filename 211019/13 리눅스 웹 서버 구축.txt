@@ -1,0 +1,173 @@
+13 리눅스 웹 서버 구축
+
+네트워크 서비스 네트워크를 통해서 특정 목적의 동작을 제고
+
+홈페이지를 구축 운여
+홈페이지 구축 다양한 언어를 통해
+회사나 기관의 얼굴인 홈페이지 만드는것
+
+홈페이지 제작 -> 리눅스 서버에 업로드-- HTTP 서버구축 --> 서비스
+HTTP 서버구축 보통 웹서버 구축이라하지만 정확히는 HTTP 서비스하는 서버 구축
+
+홈페이지 제작과 HTTP 구축은 별개
+
+네트워크 서비스 //  관련 명령어
+HTTP 서버 구축 // 서버 패키지 설치 운영
+
+네트워크 서비스
+서비스
+1개요 데몬 Daemon 웹서버 및 데이터베이스 서버등을 운영하기 위한 서버 프로세스
+서버 프로세스
+백그라운드로 실행되는 프로세스
+서비스 매니저 프로그램인 Systemd 프로그램이 운영함
+
+서비스 = 데몬 = 서버 프로세스
+
+2 서비스관리
+독자적 하나의 동작 제공 http 서비스는 http 프로토콜 동작
+실행 및 종료 systemctl 명령 // systemctl start / stop / restart / status
+서비스 실행 스크립트 파일 위치 /usr/lib/systemd/system 디렉에 존재
+서비스 실행 스크립트 파일은 하나의 디렉에 모여있음 모여있는 실행 스크립트파일은 systemctl 로 제어
+서비스 실행 스크립트 파일 이름 확장자  *.service
+
+3 서비스 자동 실행 설정
+부팅 시 서비스의 자동 실행 여부 설정
+자동실행 여부 확인 명령 # systemctl list-unit-files
+자동실행 여부 설정 명령 # systemctl enable/disable 서비스명
+상태값 enable 자동실행 // disable 자동실행안함// static 다른서비스와 연동
+
+소켓
+1 개요
+소켓 네트워크에서 서비스 요청이 있을 경우에만 실행되는 서비스
+서비스 매니저 프로그램 systemd 시작과 종료
+서비스 건수가 적은 서비스에 알맞음
+
+2 소켓 관리
+소켓 실행 스크립트 파일 동일한 디렉에 모여있음
+소켓 실행 스크립트 파일 위치 /usr/lib/systemd/system
+스크립트 파일이름 *.socket
+
+3 실습
+[ root@localhost ~] # systemctl status httpd
+httpd 서비스 이름
+q누르면 빠져나옴
+
+[ root@localhost ~] # systemctl start/stop/restart httpd
+
+실행 스크립트 파일
+[ root@localhost ~] # cd /usr/lib/systemd/system
+[ root@localhost system] # ls
+굉장히 많은 스크립트
+[ root@localhost system] # ls *.service service 확장자만
+웹서버 실행 스크립트 httpd.service
+
+소켓
+[ root@localhost system] # ls *.socket
+httpd.socket
+
+[ root@localhost system] # systemctl list-unit-files | grep httpd
+httpd.service	disabled
+httpd.socket	disabled
+페도라 리눅스에서 자동으로 실행되지 않는다는것
+
+자동실행
+[ root@localhost system] # systemctl enable httpd
+확인
+[ root@localhost system] # systemctl list-unit-files | grep httpd
+httpd.service	enabled
+httpd.socket	disabled
+
+
+HTTP 서버구축
+1 httpd 서버
+httpd 서버
+http프로토콜을 서비스하는 서버
+사용하는 포트는 80 고정 다른 포트 사용가능
+서버 패키지 종류 Apache, IIS
+클라이언트 종류 웹브라우저 IE, Edge, FireFox, Chrome
+
+2 httpd 동작
+웹 브라우저 -> 홈페이지 주소입력 -> HTML 문서요청 -> httpd 서버 -> 웹 문서요구
+
+아파치 서버 구축
+1 아파치 서버 개요
+Apache 서버는 HTTP 서버의 한종류
+패키지명 apache
+서비스 파일명 httpd.service
+패키지 설치확인 # rpm -qa | grep httpd
+패키지 설치 # yum install httpd
+
+2 아파치 서버 서비스 및 프로세스
+httpd 서비스
+시작 systemctl start httpd.service (확장자 service생략가능)
+부팅시 자동실행 systemctl enable httpd.service
+상태 확인 systemctl status httpd.service
+프로세스 여러개 실행 확인 - 서비스는 대용량 접속을 처리 하나로 서비스 불가 , 열한개의 프로세스 실행
+
+httpd 프로세스
+동작 확인 ps -ef | grep httpd
+여러 개의 프로세스 실행 확인
+
+httpd 접속 확인
+http://127.0.0.1  http://localhost  http://리눅스 서버ip주소
+입력시 텍스트 페이지 나옴
+
+3 아파치 서버 설정
+방화벽 설정 # firewall-config
+아파치 설정파일 /etc/httpd/conf/httpd.conf
+추가 설정파일 /etc/httpd/conf.d/*.conf 
+
+4 웹 문서 작성
+웹문서 작성 위치 /var/www/html
+웹 문서 이름 index.html
+<html>
+  <head>
+  <title>WEB1 - CSS</title>
+  </head>
+  <body>
+  Welcom to Shon's HOME..<p>
+  </body>
+</html>
+
+5 실습
+아파치 패키지 설치확인
+[ root@localhost ~] # rpm -qa | grep httpd
+설치가 안되어있다면
+[ root@localhost ~] # yum install httpd
+
+httpd 서비스 시작 및 확인
+[ root@localhost ~] # systemctl status httpd
+시작
+[ root@localhost ~] # systemctl start httpd
+확인 active
+[ root@localhost ~] # systemctl status httpd
+
+부팅시 자동실행 설정
+[ root@localhost ~] # systemctl enable httpd
+자동실행 확인
+[ root@localhost ~] # systemctl list-unit-files | grep httpd
+
+웹브라우저 홈페이지 접속 확인
+주소창 http://127.0.0.1 입력
+
+윈도우상에서 주소창 http://127.0.0.1 입력시 접속 불가
+방화벽 설정 "런타임" "영구적"  설정 http, https
+방화벽 프로그램 실행
+[ root@localhost ~] # firewall-config
+FedoraWorkstation 서비스탭 http, https 체크박스 체크
+설정탭 런타임, 영구적 둘다 적용해야함
+끝내기로 종료
+
+외부에서 http://127.0.0.1 입력시 접속 확인
+
+아파치 설정파일
+[ root@localhost ~] # vi /etc/httpd/conf/httpd.conf
+포트 80 정도만 확인
+
+추가 설정파일 디렉만 확인 필요시 수정가능
+[ root@localhost ~] # ls -l /etc/httpd/conf.d
+
+웹문서 작성
+[ root@localhost ~] # vi /var/www/html/index.html
+작성후 외부 내부에서 접속 확인
+

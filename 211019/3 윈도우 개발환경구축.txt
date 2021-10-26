@@ -1,0 +1,100 @@
+윈도우 웹 개발환경 구축
+
+웹을 이용하여 정보를 전달하는 방법
+1989 링크를 가진 거대한 하이퍼텍스트 데이터 베이스
+HTML 마크업 언어
+HTTP 웹상에서 정보 전달
+둘을 사용하기 위해 웹 서버와 웹 브라우저 개발
+웹프로그램
+
+윈도우 응용서버 플랫폼
+IIS 개발환경 구축
+
+윈도우10에서 동작되는 응용서버 플랫폼의 개념을 이해아고 구축할 수 있다
+웹 서버인 IIS 서버의 개념을 이해앟고 개발환경을 구축할 수 있다
+
+윈도우 응용 서버 플랫폼
+웹문서는 인터넷 상에 존재하는 웹서버에 존재 웬브라우저가 해당 웹 문서를 요청하면 전송함
+
+웹문서
+Markup 언어 ex HTML
+Script 언어 JavaScript
+Embedded 콘트롤 액티브 x
+
+Server Side Scripting 언어 웹 문서를 동적으로 생성
+웹 프로그램 다양한 언를 이용한 데이터베이스 연동을 통해 웹상에서 동작하는 프로그램
+
+웹서버는 웹 문서를 사용자에게 제공하는 프로그램
+웹서버에서 웹 문서를 제공하기 위해서 아파치 IIS 
+
+WAMP 윈도우 운영체제에서 웹 프로그램 개발을 위해 구축해야하는 소프트웨어를 묶어놓은것
+운영체제는 windows
+웹서버는 아파치
+db MySQL
+언어 PHP
+
+EasyPHP
+최신 버전 윈도우10 용 다운받아서 설치
+
+트레이 아이콘 우클릭 대쉬보드실행
+설정
+HTTP 아파치 서버 하나를 선택 후 start 클릭
+db server 하나 선택 MySQL 하나 start
+
+동작 확인 여부를 위해 php 파일 하나
+easyphp\eds-www 폴더 내 index.php 파일 생성
+메모장으로 
+
+php 문법
+<?php
+	echo "Hello World!!";
+?>
+php 확장자로 저장 시 이름 양 옆에 ""붙여줘야 txt로 저장안됨
+
+주소창에 localhost 작성하면 php 파일 불러와짐
+
+프로그램 코딩 도구 
+NotePad++ 공개 소프트웨어 다양한 언어 프로그래밍
+Sublime Text3 공개 소프트웨어 다양한 플러그인 제공 
+Acroedit 국산 무료 소프트웨서 다양한 언어 및 플러그인 제공
+
+IIS 개발환경 구축
+IIS 서버 Internet Information Services
+마소에서 제공하는 서버를 위한 인터넷 기반
+
+IIS 서버 설정
+시작 설정 제어판 프로그램 및 기능 윈도우 기능켜기/끄기
+
+인터넷정보 서비스
+World Wide Web 서비스
+웹 관리 도구
+응용 프로그램 개발 기능
+ASP
+SSI (Server side include)
+확인
+
+IIS 서버 운영 실습
+
+시작 모든 앱  windows 관리도구 IIs 관리자
+
+사이트 웹사이트 추가
+웹사이트 이름 임의대로 
+웹 문서가 있는 폴더 지정
+경로 C:\inetpub\wwwroot
+<% Response.Write "Hello World IIS !!" %>
+"default.asp"
+웹사이트 생성확인
+메모장 관리자 권한으로 실행
+
+EasyPhp devserver 아파치, MySQL를 종료하고
+
+
+
+
+
+
+
+
+
+
+

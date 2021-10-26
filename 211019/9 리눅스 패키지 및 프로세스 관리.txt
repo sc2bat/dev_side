@@ -1,0 +1,226 @@
+리눅스 패키지 및 프로세스 관리
+
+리눅스 패키지
+package 소프트웨어 묶음
+
+페도라 repository 패키지들의 저장소
+쉽게 검색 설치 다운
+
+패키지 관리 명령
+rpm 명령 yum 명령
+
+리눅스에서 실행중이 프로그램 -> 프로세스
+
+리눅스에서도 불필요한 프로세스 관리해줘야함
+
+프로세스 상태 모니터링 및 필요없는 프로세스를 찾아 종료
+-> 리눅스 서버 상태 최적화
+
+리눅스나 윈도우서버 관리자에게 필수
+
+리눅스 패키지 관리
+리눅스 프로세스 관리
+
+리눅스 패키지 관리
+ rpm 명령
+Redhat package Manager rpm
+rpm 명령 패키지를 관리하는 명령
+rpm 명령의 목적 소프트웨어를 편리하게 관리하기 위해 만들어짐
+rpm 명령 기능 패키지 설치 삭제 검새
+패키지 파일 확장자 *.rpm
+
+패키지 구성
+하나의 프로그램이 하나의 패키지
+여러 개의 프로그램이 하나의 패키지
+하나의 프로그램이 여러개의 패키지
+
+2 패키지 파일명 구성
+패키지는 보통 파일로 배포됨 파일명으로 대략적인 정보 파악
+파일명 구성 
+패키지이름-버전-릴리스번호-페도라버전.아키텍쳐.rpm
+gedit       -3.8.2-2.            fc20         .x86_64.rpm
+
+3 archiecture 아키텍쳐 종류
+i386, i486, i586 인텔 또는 AMD 계열 cpu (구형pc)
+x86_64 인텔 또는 AMD 계열 32비트, 64비트 호환 보편적사용
+alpha, sparc, ia64 알파, 썬마이크로시스템, 아이테니엄의 RISC CPU
+src 소스파일 패키지, 설치 후 컴파일 필요
+noarch 모든 cpu 에 설치가능 (NO ARCHitcture)
+
+4 패키지 다운로드
+웹브라우져 rpm Search http://rpm.pbone.net
+검색어를 통해 패키지를 찾으나 검색결과가 많아 찾기 힘들수 있음
+Advanced rpm Search 사용하여 검색설정
+
+5 rpm 명령 옵션
+rpm -qa 전체 패키지 화면 출력
+rpm -qa 패키지 이름 설치확인
+rpm -qi 패키지이름 패키지 정보
+rpm -qip 패키지이름 패키지 파일의 정보보기
+rpm -Uvh 패키지이름 패키지 설치 및 업그레이드
+rpm -e 패키지이름 패키지 삭제
+
+ rpm Search http://rpm.pbone.net
+Advanced rpm Search 사용하여 검색설정 페도라25
+galculator 검색 및 다운로드 86_64.rpm
+다운로드 사이트pbone.net 이용
+
+다운로드 끝나면 터미널 창에서
+다운로드 디렉토리로 이동
+
+[root@localhost ~] # ls
+목록 중 '다운로드' 우클릭 복사
+한글 입력이 안될수도있음
+[root@localhost ~] # cd 붙여넣기
+[root@localhost 다운로드] # ls
+다운된 패키지 확인
+[root@localhost 다운로드] # rpm -qip *.rpm
+설치
+[root@localhost 다운로드] # rpm -Uvh *.rpm
+
+설치 확인
+[root@localhost 다운로드] # rpm -qa galculator
+
+설치된 패키지의 정보보기
+[root@localhost 다운로드] # rpm -qi
+
+패키지 실행
+[root@localhost 다운로드] # galculator
+
+패키지 삭제
+[root@localhost 다운로드] # rpm -e galculator
+
+yum 명령
+1 yum Yellowdog Updater Modified
+yum 명령 rpm 명령을 기반으로 동작, rpm 명령보다 사용하기 편리
+
+하나의 패키지는 다른 패키지와 의존성이 존재할 수 있음
+즉, 하나의 패키지를 실행하기 위해서는 여러개의 패키지설치가 필요할 수도있음
+
+rpm 명령 의존선 검사 안됨, 패키지 설치 파일이 로컬시스테멩 존재해야가능
+yum 명령 패키지 저장소 Repository 를 인터넷상에 제공 자동으로 의존성 있는 패키지 같이 설치 -> 패키지 의존성 해결
+
+2 yum 명령어 옵션
+yum search 패키지명 패키지 검색
+yum install 패키지명 패키지 설치
+yum check-update 패키지명 패키지 업데이트확인
+yum update 패키지명 패키지 업데이트실행
+yum remove 패키지명 패키지 삭제
+yum info 패키지명 패키지 정보
+
+3 yum 실습
+[root@localhost 다운로드] # 
+
+검색 필요한 패키지 확인 다운로드
+[root@localhost 다운로드] # yum search game
+[root@localhost 다운로드] # yum search gnome-mahjongg
+
+설치
+[root@localhost 다운로드] # yum install gnome-mahjongg
+
+실행
+[root@localhost 다운로드] # gnome-mahjongg
+
+설치된 패키지 정보보기
+[root@localhost 다운로드] # yum info gnome-mahjongg
+
+삭제
+[root@localhost 다운로드] # yum remove gnome-mahjongg
+
+리눅스 프로세스 관리
+프로세스 
+1 프로세스 정의
+Process 하드에 저장된 실행코드가 메모리에 로딩되어 활성화된것, 실행중인 프로그램
+
+2 프로세스 상태도
+프로세스를 실행하면 우선 Runnable 상태 하나의 프로세스를 Running 상태로 전환
+Running 상태에서 입출력이 일어나면 -> Blocking 상태로 전환 다른 프로세스가 Running 상태로 전환할 수 있게됨
+러닝 상태에서 sleeping // stop 될수되 있음
+
+3 프로세스 관련 용어
+포그라운드 프로세스 Foreground process 화면에서 실행되는 것이 보이는 프로세스
+백그라운드 프로세스 background process 화면에서 보이지 않으면서 실행되는 프로세스 백신, 방화벽
+프로세스 번호 PID: Process ID 프로세스에 할당되는 고유번호
+백그라운드 번호 백그라운드로 실행되는 프로세스의 순차 번호
+부모 프로세스와 자식 프로세스 실행되는 프로세스는 부모 프로세스에 종속되며, 이때 종속된 프로세스는 자식 프로세스임
+x 윈도우 상에서 웹브라우저 실행 -> x윈도우 부모프로세스 웹 브라우저 자식 프로세스
+
+
+프로세스 관련 명령어
+1 ps 명령어
+ps 명령어 프로세스의 정보 및 상태를 표시
+
+ps aux 모든 프로세스의 사용자와 실행시간 표시 가장 자세한 내용
+ps -ef 프로세스 번호로 정렬하여 표시 가장 유용한 옵션
+
+표시되는 프로세스 정보
+UID ro USER 프로세스를 실행한 사용자 ID 	COMMAND 명령어 또는 프로그램 이름
+PID 프로세스 번호				%CPU CPU 점유율
+PPID 부모프로세스 번호			%MEM 메모리점유율
+TTY 실행 위치				VSZ 가상메모리 점유 용량
+STAT 프로세스 상태			SS  주메모리 점유용량
+TIME 프로세스 실행 시간
+
+프로세스 상태
+D 입출력대기상태	R Runnable 또는 Running 상태
+S Sleeping상태	T Stopped 상태
+X Dead상태	Z Zombie 상태
+
+2 kill 명령
+kill 명령 프로세스에 신호전달 프로세스 종료 명령
+프로세스 강제 종료 옵션 -9 
+프로세스 PID 알아내어 이용 종료 ps명령으로 확인
+백그라운드 프로세는 kill 명령으로만 종료시킬 수 있으며 
+포그라운드 프로세스는 Ctrl C 로 종료
+
+3 포그라운드와 백그라운드 관리 명령
+& 백그라운드 프로세스 실행방법
+fg 백그라운드 프로세스를 포그라운드로 전환
+Ctrl Z 포그라운드 프로세스 정지
+jobs 백그라운드 프로세스 목록보기
+
+4 프로세스 관련 명령어 실습
+[root@localhost ] # 
+
+[root@localhost ] # galculator -> 포그라운드로 실행
+
+프로세스 검색
+[root@localhost ] # ps aux
+galculator 실행 확인
+
+[root@localhost ] # ps -ef
+현재 galculator PPID 부모프로세스 번호 2306
+PID 가 2306 인 프로세스 bash -> 터미널임
+
+프로세스 종료
+[root@localhost ] # kill -9 galculator의 PID번호
+
+[root@localhost ] # galculator -> 포그라운드로 실행 -> 종료 ctrl c
+
+[root@localhost ] # galculator -> 포그라운드로 실행 -> ctrl z 프로세스는 정지 종료아님
+
+정지된 프로세스 종료
+[root@localhost ] # ps -ef PID 확인
+[root@localhost ] # kill -9 galculator의 PID번호
+
+백그라운드 프로세스 실행 
+[root@localhost ] # galculator &
+터미널에 커서 활성화되어있음
+
+현재 실행되고 있는 백그라운드 프로세스 
+[root@localhost ] # jobs
+[ 2] + Running 			galculator & (앞의 번호 2는 백그라운드 번호)
+
+백그라운드를 포그라운드로 전환
+[root@localhost ] # fg 백그라운드번호
+
+
+
+
+
+
+
+
+
+
+

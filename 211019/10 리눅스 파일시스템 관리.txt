@@ -1,0 +1,262 @@
+리눅스 파일시스템 관리
+
+페도라 리눅스 장치 사용하는 방법
+usb cdrom 마운트 해야함
+
+마운트 장치 또는 파티션을 사용하기 위한 과정님 파티션과 디렉토리를 연결하는 것
+
+페도라 리눅스 사용 중 하드가 부족하면 하드를 추가 및 마운트하면됨
+
+가상머신에서 하드 추가하는 것은 가상으로 추가하기에 쉬움
+
+마운트 Mount // 하드디스크관리
+
+마운트 Mount 
+1 마운트 정의
+마운트 윈도우에선 안씀
+페도라에서는 장치 또는 파티션 사용 과정 파티션과 디렉토리를 연결하는 것
+
+마운트대상 하드 파티션, CD DVD USB
+
+2 마운트 명령어
+mount 마운트 정보보기	mount 장치명 디렉토리명 마운트하기	umount 장치명 마운트 해제
+
+CD/DVD 마운트 
+1 CD/DVD 장치 사용 장치에 CD/DVD매체를 넣고 마운트해야함
+2 x윈도우에서는 자동으로 마운트됨
+마운트 디렉토리 /run/media/[사용자이름]/[CD/DVD볼륨이름]
+
+3 장치명 /dev/sr0 	or  /dev/cdrom
+
+4 마운트하기 # mount /dev/cdrom [마운트디렉토리]
+
+5 마운트 해제 # umount /dev/cdrom 장치명지정
+
+6 사용 # cd [마운트디렉토리] 로 이동하여사용
+
+CD/DVD 마운트 실습
+좌측 상단 player 메뉴 - Manage - Virual Machine Settings - CD/DVD 페도라 리눅스 이미지가 연결되어있음
+Use physicla drive 실제 CD/DVD 연결시 사용
+
+[root@localhost ~] #
+
+마운트상황보기
+[root@localhost ~] # mount 만하면 너무 많이 나옴
+
+[root@localhost ~] # mount | grep sr0 // sr0 문자열이 있는것만 출력
+
+마운트 해제
+[root@localhost ~] # umount /dev/sr0 장치면 지정
+마운트 해제해도 데이터는 들어있음
+
+Virual Machine Settings 에서 Use physicla drive 실제 CD/DVD 선택 ->CD/DVD 자동으로열림
+ 
+Virual Machine Settings 원상복구 x윈도우 사용하기에 자동으로 마운트됨 -> 팝업으로 알려줌
+[root@localhost ~] # mount | grep sr0 마운트 확인하면 되어있음
+
+[root@localhost ~] # cd /run/media/root
+[root@localhost root] # ls
+iso 파일 나옴
+[root@localhost root] # cd iso 파일
+[root@localhost iso파일] # ls
+EFI LiveOS images isolinux
+
+[root@localhost iso파일] # ls -l 4개의 디렉토리 확인
+
+[root@localhost iso파일] # ..cd
+cd드라이브는 쓰기가안되서 임의로 파일생성
+[root@localhost root] # vi test
+
+임의로 입력
+[root@localhost root] # cp test iso 파일
+안된다고 뜸 read only 이기때문
+
+[root@localhost root] # cd iso 파일
+[root@localhost iso파일] # ls
+[root@localhost iso파일] # cd EFI
+
+[root@localhost EFI] # cd Boot
+[root@localhost BOOT] # ls
+grub.cfg 파일이 있음
+[root@localhost BOOT] # cp grub.cfg /run/media/root/
+복사는 됨
+
+cd에 있는것을 리눅스로 가져옴
+[root@localhost BOOT] # cd /run/media/root/
+[root@localhost root] # ls
+복사된 파일 확인
+
+
+CD/DVD 수동마운트
+마운트 해제
+[root@localhost root] # umount /dev/sr0
+
+해제된 마운트 확인
+[root@localhost root] # mount | grep sr0
+
+수동 마운트 내가 원하는 디렉토리로 마운트
+[root@localhost root] # mkdir cdrom 디렉토리 생성 :cdrom
+[root@localhost root] # ls -l 디렉토리 확인
+
+[root@localhost root] # ls cdrom 디렉토리 목록 없음
+
+수동마운트
+[root@localhost root] # mount /dev/sr0 cdrom
+[root@localhost root] # ls cdrom 
+cdrom 내에 마운트 된것을 확인
+
+마운트해제
+[root@localhost root] # umount /dev/sr0
+[root@localhost root] # ls -l
+[root@localhost root] # ls -l cdrom
+cdrom 디렉토리는 그대로 있지만 그 내에는 아무것도 없음
+
+USB 마운트
+1 USB 마운트 
+x윈도우에서는 자동으로 마운트됨 마운트 디렉토리 /run/media/[사용자이름]/[usb 이름]
+장치명 /dev/sdb1 설치된 하드디스크에따라 숫자가 달라짐
+마운트하기 # mount/dev/sdb1 장치면 지정
+마운트해제 # umount/dev/sdb1 장치면 지정
+사용하려면 마운트 디렉토리로 이동해야함
+
+2 실습
+[root@localhost ~] # 
+
+x윈도우상에서는 자동 마운트됨 팝업뜸
+파일탐색기에서 마운트된것을 확인
+[root@localhost ~] # mount | grep /dev/sdb1
+[root@localhost ~] # cd /run/dedia/root/
+[root@localhost root] # ls -l
+[root@localhost root] # ls -l 3201-2746
+복사
+[root@localhost root] # cp test 3201-2746
+복사확인
+[root@localhost root] # ls -l 3201-2746
+
+마운트해제
+[root@localhost root] # umount /dev/sdb1
+[root@localhost root] # ls -l 마운트해제확인
+
+수동마운트
+usb 디렉토리 생성
+[root@localhost root] # mkdir usb
+[root@localhost root] # ls -l 생성확인
+
+수동마운트
+[root@localhost root] # mount /dev/sdb1 usb
+[root@localhost root] # ls -l usb 확인 (한글파일은 깨질수있음)
+
+마운트해제
+[root@localhost root] # umount /dev/sdb1
+[root@localhost root] # ls -l usb 확인
+
+하드디스크관리
+
+하드디스크 추가
+
+가상컴에 하드 추가
+player - manage - virtual machine settings
+
+하드디스크 파티션 및 파일시스템 생성
+장치명 /dev/sdb(두번째하드디스크) {세번째라면 /dev/sdc}
+파티션 설정 명령 : fdisk /dev/sdb 용량 1기가 주Primary 파티션 1개
+파일시스템 생성명령 mkfs -t ext4 /dev/sdb1
+파티션 /dev/sdb1	 파일시스템종류 ext4
+
+하드추가실습
+player - manage - virtual machine settings
+하단 Add 클릭
+Hard Disk 선택 next -> SCSI 방식으로 -> create a new virtualdisk -> 임의로 용량 1기가 -> Store virtual disk as a single file
+-> 파일이름은 고대로 -> finish
+
+New Hard Disk 1GB 생성됨 확인
+
+우측 상단 아이콘으로 하드 2개 확인
+
+페도라 리눅스를 재부팅
+
+추가된 하드 장치명확인
+[root@localhost ~] # ls -l /dev/sd?
+sda 기존 		sdb 생성된것
+sd? 로 둘다 확인
+
+파티션생성
+[root@localhost ~] # fdisk /dev/sdb -> n 입력
+p 주파티션 	e 확장 파티션
+p입력하여 주파티션
+Partition number 파티션 넘버 걍 엔터
+First sector 첫값 걍 엔터
+Last sector 끝값 걍 엔터
+p 입력하면 sdb1 에 대한 용량 나옴
+
+반드시 해야하는것
+w를 눌러 기록을해주고 빠져나옴
+
+파일시스템 생성 포맷과 같음
+[root@localhost ~] # mkfs -t ext4 /dev/sdb1 sdb1 을 포맷
+
+하드디스크마운트 
+1
+장치명 /dev/sdb1 
+디렉토리 /data
+부팅시 자동으로 마운트시키기 /etc/fstab 수정
+
+2 부팅시 자동 마운트하기
+추가한 하드 자동 마운트
+/etc/fstab 수정
+/dev/sdb1         /data 	ext4		 defaults 		1 		  2
+파티션 장치이름  마운트될 	파일시스템종류	접급권한속성 	0 덤프백업사용안함  0 점검안함(부팅빠름) 
+		디렉토리			읽기 쓰기 실행	1 덤프백없사용	  1 루트 파일시스템점검
+									  2 파일시스템점검
+3 파일시스템 정보보기
+마운트현황, 파티션별 용량 등 현황을 보기 위한 명령 : df
+df 파티션별 용량을 KB 단위
+df -m MB 단위로
+
+[root@localhost ~] # df 
+페도라 리눅스 마운트 현황 및 파일 시스템 정보 볼수있음
+새로 추가한 마운트, kb 단위로 확인
+
+4 하드 마운트 실습
+수동 마운트
+디렉토리 생성
+[root@localhost ~] # mkdir /data
+마운트
+[root@localhost ~] # mount /dev/sdb1 /data
+확인
+[root@localhost ~] # ls -l /data
+
+파일 하나 복사
+[root@localhost ~] # cp test /data
+확인
+[root@localhost ~] # ls -l /data
+마운트해제
+[root@localhost ~] # umount /dev/sdb1
+[root@localhost ~] # ls -l /data
+
+다시 마운트
+[root@localhost ~] # mount /dev/sdb1 /data
+[root@localhost ~] # ls -l /data
+마운트해제
+[root@localhost ~] # umount /dev/sdb1
+
+용량이 부족했기에 하드 추가한것임
+수동마운트 불편 자동으로 마운트
+
+[root@localhost ~] # vi /etc/fstab 
+젤 밑에 줄에 마운트 정보입력
+/dev/sdb1	/data	ext4	defaults	1	2
+저장하고 빠져나와서
+[root@localhost ~] # reboot 재부팅하면 자동마운트
+
+자동마운트 확인
+[root@localhost ~] # ls -l /data
+
+
+
+
+
+
+
+
+

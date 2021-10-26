@@ -1,0 +1,176 @@
+리눅스 프로그램밍 개발도구
+
+페도라 리눅스 프로그램 개발 코딩도구
+Vi 편집기 vim 편집기 gui 환경의 개발도구 등등
+
+윈도우 운영체제와 동일한 gui 프로그래밍도구는 이클립스
+
+지원되는 컴파일러 중 대표적인것 gcc
+
+프로그래밍을 위한 코딩도구
+vi 편집기와 gcc컴파일러
+
+대표적인 프로그래밍 도구
+텍스트 인터페이스 기반의 코딩 도구
+vi vim
+GUI 기반의 코딩 도구
+이클립스 등등
+
+페도라에서는 텍스트기반 추천
+효율성과 속도가 좋고 편리함
+
+vi Visual editor 
+1976 빌조이 개발
+키보드 입력을 통해 모든 명령 처리
+리눅스 계열 운영체제 기본 탑재
+
+GUI 기반
+1. Emacs 1976 리처드 스톨만
+키보드로 모든 명령 처리
+방대한 명령어 vim  의 5배
+파일관리, 디버거, 웹브라우저, mail, ftp, news 기능
+확장성이 좋지만 속도가 느림
+기본으로 설치 안됨 별로로 설치해야함
+2. 이클립스
+Java 언어를 위한 IDE
+플러그인 확장으 ㄹ통해 다양한 언어 사용
+윈도우 이클립스와 같은 사용법 리눅스에서 느림
+3 gedit
+가장 간단 GNOME 데탑 환경
+윈도우용 Editplus와 거의 동일 
+4 KDevelop
+KDE 데탑환경
+다양한 언어 지원
+visaul studio 인터페이스 유사
+명령어 실행시 해당 패키지 설치
+5. Anjuta 
+GNOME 데탑 환경
+다양한 언어지원
+형상관리 툴인 CVS 와 연동
+명령어 실행시설치
+
+Emacs 설치
+[root@localhost ~] # yum install cmacs.86_64
+이클립스, KDevelop, Anjuta 명령 입력시 설치됨
+[root@localhost ~] # eclipse
+
+프로그램 표시에 아이콘 생성됨
+gedit 은 기본으로 있음 프로그램표시에 텍스트... 을 클릭하면됨
+
+vi 편집기와 gcc컴파일러
+vi 편집기
+1.vi 편집기
+커서이동모드 시작하면얘로 시작
+-> 저장, 종료 등(:), 검색(/,?) ->
+<- 명령모드 종료 : [ESC] <-
+명령모드
+커서 이동모드 
+-> 수정 삭제 입력 등 (편집명령)->
+<- 편집 종료 [ESC] <-
+편집모드
+사용모드 전환하려면 명령어사용해야함
+
+3 커서이동 명령어
+a 커서 뒤칸으로
+A 마지막 칸
+i or Insert 앞칸
+I 첫칸
+o 아래
+O 위
+문자수 s 문자를 대체 숫자로 연계
+라인수 S 라인 전체를 대체 숫자로 연계
+r 문자를 덮어쓰면서
+R 문자열을 덮어쓰면서 ESC 키 입력할때까지 문자입력가능
+
+PgDn, ^f(Ctrl+f) 한페이지 아래로
+PgUp, ^b(Ctrl+b) 한페이지 위로
+Home, 0 첫번째 컬럼
+End, $ 마지막 컬럼
+w 한단어씩 앞으로
+b 한단어씩 뒤로
+
+4 삭제 명령
+문자수 x, 문자수 Delete  한문자 삭제 3x 는 3개 문자 삭제
+문자수 X 앞의 한 문자 삭제 3X 는 앞에 3개 문자 삭제
+라인수 dd 한 라인삭제 3dd 는 3줄 삭제
+D 뒤에 있는 모든 문자 삭제
+
+5 복사 및 검색 명령
+복사 
+라인수 yy 한줄복사
+라인수 p 붙여넣기
+검색 
+/문자열 문서의 아래로 찾고싶은 것 계속하려면 n 반대로하려면 N
+?문자열 문서의 위 계속하려면 n 반대로하려면 N
+
+6 명령 취소 및 반복
+u 방금 전 명령 취소
+. 명령 반복 매크로마냥 쓸수잇음
+
+7 저장 및 종료 명령
+:q 저장하지 않고 종료 수정이 되었다면 종료안됨
+:q! 저장하지 않고 종료 수정이 되었어도 강제종료
+:wq 저장하고 종료
+:wq! 저장하고 강제종료
+
+vi 편집기
+[root@localhost ~] # 
+[root@localhost ~] # vi test(파일이름)
+test 가 없으면 만들고 있으면 불러옴
+
+커서이동 화살표 페이지업다운
+
+입력 a i o s r 입력이 끝나면 반드시 ESC
+
+삭제 딜리트 키 x
+검색 / ? 
+
+2 gcc 컴파일러
+GNU C Compiler
+지원 cpu ARM DEC AVR 등등
+컴파일 가능언어 C Fortran Ada Java Objective-C
+gcc 명령 실행시 설치
+
+GCC GNU Compiler Collection
+다양한 컴파일러를 포함하는 컴파일러 묶음
+gcc, c++ Java Ada Fortran Objective-C
+
+2 gcc 컴파일 과장
+소스파일 hello.c -> 전처리기 -> 전처리 결과파일 hello.i -> C 컴파일러 -> hello.s 어셈블리 파일 -> 어셈블러 -
+-> 오브젝트 파일 hello.o -> 링커 -> hello 실행파일
+
+3 gcc 컴파일 명령
+# gcc -v -save-temps -o hello hello.c
+gcc 컴파일 명령
+-v 컴파일 과정을 화면에 출력
+-save-temps 컴파일 과정에서 생성되는 중간 파일을 지우지 않고 저장 / 컴파일 오류분석에 유용
+-o 실행파일 지정 옵션
+hello 실행파일 이름
+hello.c 소스파일 이름
+
+4 실습
+[root@localhost ~] # hello.c
+
+소스파일 작성
+#include <stdio.h>
+int main()
+{
+	print("Hello Students!! \n");
+	return 0;
+}
+
+컴파일 실행
+[root@localhost ~] # gcc -v -save-temps -o hello hello.c
+
+컴파일 결과물
+[root@localhost ~] # ls -l h*
+hello // hello.c // hello.i // hello.o // hello.s
+
+파일 실행
+[root@localhost ~] # ./hello
+
+
+
+
+
+

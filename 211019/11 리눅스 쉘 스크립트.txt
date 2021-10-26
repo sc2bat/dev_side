@@ -1,0 +1,303 @@
+리눅스 쉘 스크립트
+
+리눅스 명령 입력시 꽤 긴문장 입력, 모두 외우기 힘듦, 번거로움
+명령을 짧게 사용
+
+쉘스크립트 활용
+명령들을 모아 컴퓨터 프로그램처럼 작성 실행
+
+쉘스크립트 = 리눅스 명령을 나열한 실행파일임
+
+쉘 Shell
+쉘 스크립트 Shell Script
+
+쉘 Shell
+쉘의 기본
+1 쉘의 개요
+명령어 해석기 제공 (사용자의 명령을 입력받아 커널을 통해 명령실행)
+환경변수 및 지역변수 제공
+쉘 스크립트 제공 리눅스 운영에 필요한 프로그램작성
+다양한 쉘을 제공(선택가능) 쉘에 따라 명령어 문법 및 스크립트 문법이 다르기에 편리한 쉘 선택사용
+사용자가 쉘을 선택하기 위해서는 패스워드 파일 수정 /etc/passwd
+
+2 쉘의 종류
+Bourne 쉘 계열 비에이쉘(bash) 본쉘(bsh) 콘쉘(ksh)
+비에이쉘(bash) 리눅스 기본설정쉘, 배쉬쉘, (콘쉘/씨쉘) 장점 모은쉘
+
+C 쉘 계열 씨쉘(csh) 티씨쉘(tcsh)
+
+3 bash 기능
+별명기능 명령어 단축기능 / # alias ls = 'ls -l' / # alias c ='clear'
+history기능 사용한 명령어 저장 / # history / # ↑ ↓ (사용한 명령어 불러오기)
+자동이름완성기능 Tab 키를 이용한 파일이름 자동완성
+프롬프트제어기능 환경변수에 쉘 프롬프트 정보 변경 / # PS1 = '$LOGNAME@ $PWD #'
+명령편집기능 프롬프트상에서 명령어 수정기능
+
+4 bash 실습
+[ root@localhost ~] # 
+쉘 종류 다양 사용자별로 변경가능
+쉘종류 확인
+[ root@localhost ~] # vi /etc/passwd
+root: x: 0: 0: root: /root: /bin/bash 처럼 다 지정이 되어있음
+
+별명기능 clear 명령을 c 입력만으로 실행되게끔
+[ root@localhost ~] # alias c='clear'
+[ root@localhost ~] # alias ls='ls -l'
+
+history
+[ root@localhost ~] # history
+화살표로 사용했던 명령어 불러오기가능
+[ root@localhost ~] # !사용했던명령어번호
+
+자동완성
+workspace 로이동시 
+[ root@localhost ~] # cd workspace 전부 입력해야하지만
+[ root@localhost ~] # cd wo 까지 입력후 Tab 키로 자동완성
+
+프롬프트제어 [ root@localhost ~] 얘가 프롬프트 모양임
+[ root@localhost ~] # PS1 = '$LOGNAME@ $PWD #'
+$LOGNAME = 로그인한 사용자이름root $PWD = 현재 디렉토리
+하면 root@ /root # 으로 프롬프트변경됨
+
+ 쉘 환경변수와 지역변수
+환경변수 리눅스 운영체제가 제공하는 시스템 설정값
+HOME 로그인한 사용자의 홈디렉
+PWD 현재 작업 디렉
+LOGNAME, USER, USERNAME 로그인한 사용자이름
+PS1 쉘 프롬프트
+HOSTNAME 호스트이름
+SHELL 로그인하여 사용중인 쉘의 종류
+
+2 환경변수 관련 명령어
+전체 환경변수 보기 # printenv / #env
+특정 환경변수 보기 # echo $환경변수
+환경변수 설정 부모쉘 로그인하여사용하는 쉘 자식 쉘 부모쉘에서 파생된 쉘 
+환경변수='값' 
+export 환경변수='값' 자식쉘까지도 환경변수가능
+
+3 지역변수
+지역변수 사용자가 임시로 만들어 사용하는 변수
+지역변수 보기 # echo $지역변수
+지역변수 설정 # 지역변수='값' / # export 지역변수='값' 
+
+쉘 스크립트
+1 쉘 스크립트 개요
+c언어와 유사
+변수, 반복문, 제어문 사용가능
+스크립트 언어이기에 컴파일 불필요
+쉘 스크립트 프로그램은 명령어가 나열되어있는 batch 배치 파일 형태
+
+2 쉘 스크립트 작성
+쉘 스크립트 작성 도구 vi 편집기, gedit
+쉘스크립트 확장자 *.sh
+쉘 스크립트 파일의 기본 형태
+#!/bin/sh 첫줄 쉘 사용의미 / 첫 칸 #은 설명문 취급 프로그램실행과 상관없이 작성가능
+본문 쉘 스크립트 작성
+exit 0 마지막줄 정상적으로 종료의미 종료코드0을 운영체제에 반환
+
+3 쉘 스크립트 실행
+sh 명령이용 # sh info.sh
+실행권한 부여
+# chmod ugo+x info.sh
+# ./info.sh
+
+4 실습
+쉘 스크립트 파일 작성 info.sh 작성
+[ root@localhost ~] # vi info.sh
+
+#!/bin/sh
+echo "Name : " $USER
+echo "Host : " $HOSTNAME
+exit 0
+
+쉘 스크립트 info.sh 실행
+[ root@localhost ~] # sh info.sh
+실행권한 확인
+[ root@localhost ~] # ls -l info.sh
+
+실행권한 부여
+[ root@localhost ~] # chmod ugo+x info.sh
+또는 [ root@localhost ~] # chmod 755 info.sh
+실행권한 확인
+[ root@localhost ~] # ls -l info.sh
+
+쉘 스크립트 실행 
+[ root@localhost ~] # ./info.sh
+
+쉘스크립트
+쉘스크립트 문법
+1변수
+변수선업없음 처음 값이 할당되면 변수생성
+변수의 모든 값은 문자열로 취급
+변수명은 대소문자 구분해야함
+대입연산자 = 좌우에 공백이 없어야됨
+대입하는 문자열은 '' or "" 로 묶음 묶지 않는다면 공백이없어야됨
+변수값의 출력 변수명 앞에 $ 붙임
+변수값 입력 read 이용
+
+2 숫자 계산
+사칙연산이 필요한 경우 'expr'키워드 사용
+'expr' 키워드가 들어가는 연산식은 '' 로 묶음
+() or * 기호 사용시 | 역슬래쉬와 같이 사용
+
+3 기타문법
+파라미터(Parameter)변수 쉘 스크립트를 실행할 경우 인자로 지정된 값을 저장하는 변수
+파라미터(Parameter)변수이름 $0, $1 ... $0부터 순차적으로
+
+문자열을 명령으로 인식하여실행 eval
+반복 및 조건문, 비교, 산술, 논리 연산자, 파일조건문, 사용자정의함수 등
+if, if~else, case~esac, for~in, while, until, break, continue, exit, return, printf, set, $(명령어), shift
+
+4 쉘스크립트 실습
+ex1.sh 파일생성
+[ root@localhost ~] # vi ex1.sh
+
+#!/bin/sh
+my="Shon"
+you=Students ""가 없으면 = 양쪽에 공백없어야됨
+echo "my : " $my
+echo "you : " $you
+echo "Input String.. " 키보드로 입력받음
+read me 입력받은 값이 들어감
+echo "me = " $me
+exit 0
+
+실행
+[ root@localhost ~] # sh ex1.sh
+my = Shon
+you = Students
+Input String..
+값 입력
+me = '값'
+
+두번째 예제 숫자계산
+[ root@localhost ~] # vi ex2.sh
+#!/bin/sh
+num1=100
+num2=200
+num3=$num1+$num2
+num4=` expr $num1 + $num2` //주의점 작은따옴표가 아닌 역따옴표임 ` // 계산할때는 + 양옆 띄워줘야됨
+num5=` expr |( $num1 + $num2 |) |* 2` 괄호로 묶거나 * 사용시 역슬래쉬 | 넣어줘야됨
+echo " num1 = " $num1
+echo " num2 = " $num2
+echo " num3 = " $num3
+echo " num4 = " $num4
+echo " num5 = " $num5
+exit 0
+
+
+실행
+[ root@localhost ~] # sh ex2.sh
+num1 = 100
+num2 = 200
+num3 = 100+200
+num4 = 300
+num5 = 600
+
+세번째 예제 파라미터변수
+[ root@localhost ~] # vi ex3.sh
+#!/bin/sh
+echo "0 = " $0
+echo "1 = " $1
+echo "2 = " $2
+echo "3 = " $3
+sum=` expr $1 + $2 + $3`
+echo "sum = " $sum
+
+실행
+[ root@localhost ~] # sh ex3.sh 1 2 3
+0 = ex3.sh
+1 = 1
+2 = 2
+3 = 3
+sum = 6
+
+네번째 예제 문자열 명령실행 eval
+[ root@localhost ~] # vi ex4.sh
+#!/bin/sh
+cmd="ls"
+echo "Command = " $cmd -> 문자열로 실행
+eval $cmd -> cmd에 저장된 ls 명령을 실행함
+exit 0
+실행
+[ root@localhost ~] # sh ex4.sh
+
+쉘 초기화 파일 설정
+1 쉘 초기화 파일
+시스템 사용설정파일
+모든 사용자를 위한 파일 // 리눅스가 부팅될때 모든사용자에게 적용 실행되는 쉘스크립트 파일
+1차 초기화파일 /etc/profile
+2차 초기화파일 /etc/bashrc
+각 사용자를 위한 파일 // 각사용자의 홈디렉토리 숨김파일 각 사용자의 로그인시 적용
+1차 초기화파일 $HOME/.bash_profile
+2차 초기화파일 $HOME/.bashrc
+
+2 쉘초기화 파일 역할
+1차초기화 파일
+$HOME/.bash_profile
+2차 초기화 파일 실행
+환경변수 설정
+
+2차 초기화 파일 -> 사용자가 편리하도록 초기화 파일 수정해서 사용
+$HOME/.bashrc
+명령어 단축별칭 설정
+기타 쉘 설정
+
+3 실습
+[ root@localhost ~] # ls -al (숨김파일까지 보기)
+
+[ root@localhost ~] # vi .bash_profile
+1차 초기화 파일 내용
+2차 초기화파일 실행 
+PS1=' [$LOGNAME@ $PWD] # '
+export PS1 이렇게하면 로그인시 프롬프트 변경됨
+
+[ root@localhost ~] # vi .bashrc
+alias 가 몇개있음
+alias c='clear'
+alias h='history' 이런씩으로 추가가능
+로그인하면 수정한 내용 적용
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

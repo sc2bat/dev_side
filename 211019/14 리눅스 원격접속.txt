@@ -1,0 +1,216 @@
+14 리눅스 원격접속
+
+페도라 운영체제 접속 방법
+TELNET 원격 접속 과정 암호화 x 해킹위험
+SSH 암호화 접속 TELNET 보다 안전
+VNC x윈도우 화면으로 접속 편리
+
+TELNET 서버 구축 TELNET 서비스를 사용 원격접속
+SSH 서버와 VNC 서버 설치, 각각 원격접속
+
+TELNET 
+1 텔넷 TELNET 개요
+가장 오랫동안 사용된 기본적인 원격 접속
+텔넷 이용 서버에 접속하는 건수 많지 않기에 소켓 서비스로 제공
+x윈도우가 아닌 텍스트모드만 제공
+텔넷 클라이언트 프로그램 대부분 운영체제에서 기본적으로 제공
+암호화 x 보안에 취약
+
+2 TELNET 서비스 동작
+	텔넷 서버의 아이피 주소로 접속 요청
+텔넷 클라이언트 -> 인터넷 -> 텔넷서버
+(TELNET,Putty)		로그인 메시지
+
+TELNET 서버설치
+1 과정
+텔넷 서버 패키지 다운 
+다운로드한 텔넷 서버 패키지 설치 및 시작 
+외부에서 접속되도록 서비스 포트 번호 방화벽 설정으로 열어줌
+원격접속 시험을 통해 텔넷 서버 동작확인
+
+2 TELNET 서버 설치 방법
+인터넷에서 Telnet-server 패키지 다운로드
+사이트 http://rpm.pbone.net
+다운 위치 : $HOME/다운로드
+
+다운로드된 패키지 파일 설치 # rpm-uvh 패키지파일명
+TELNET 소켓 서비스 시작 # systemctl start telnet.socket
+
+텔넷 서비스 방화벽 설정 23번포트 # firewall-config
+
+텔넷 클라이언트 프로그램 접속 로그인 메시지 나타나면 원격접속 성공
+
+TELNET 서버원격접속
+1 TELNET 클라이언트 활성화
+TELNET 으로 원격접속위해 윈도우 TELNET 클라이언트 프로그램 사용
+제어판 -> 프로그램및 기능-> window 기능 사용/사용안함
+아래쪽 텔넷 클라이언트 체크박스 체크
+
+2 TELNET 접속
+윈도우 cmd 실행 -> TELNET 명령어 뒤에 페도라 서버의 IP 주소 실행
+실행후 로그인 메시지가 나오면 페도라 운영체제에 등록된 사용자로 로그인
+
+3 TELNET 서버 설치및 원격접속 실습
+http://rpm.pbone.net 심플 서치 우측에 advenced  클릭
+Fedora25 체크 텔넷 검색
+패키지 다운
+
+터미널 창
+[ root@localhost ~] # ls
+다운로드 우클릭 복사 한글 복붙
+[ root@localhost ~] # cd 붙여넣기
+[ root@localhost 다운로드] # ls -ㅣ 다운된 서버 패키지
+[ root@localhost 다운로드] # rpm-Uvh telnet-server
+설치 확인
+[ root@localhost 다운로드] # rpm -qa | grep telnet 
+telnet-sever 텔넷 서버
+telnet 클라이언트
+서버 시작
+[ root@localhost 다운로드] # systemctl start telnet.socket
+텔넷 접속 테스트
+[ root@localhost 다운로드] # telnet 127.0.0.1
+로그인 메시지가 뜸 알고있는 사용자 id 암호 입력
+
+로그아웃
+[ userid@localhost ~] $ logout 
+
+방화벽 설정
+[ root@localhost ~] # firewall-config
+fedoraworkstation 런타임과 영구적 둘다 해줘야됨 서비스 telnet 체크박스 체크
+
+외부 접속 윈도우에서
+제어판 -> 프로그램및 기능-> window 기능 사용/사용안함
+아래쪽 텔넷 클라이언트 체크박스 체크
+
+명령 프롬프트 cmd 실행 
+
+리눅스로 원격 접속
+telnet 리눅스 ip 192.168.***.*
+로그인 메시지 뜨면 완료
+
+SSH
+1 SSH 서비스 동작
+SSH 인터넷상의 전송되는 데이터 암호화 보안 강화된 원격접속 서비스
+서버패키지명 Openssh-server 페도라 리눅스에 기본 설치
+클라이언트 프로그램 // 페도라 리눅스 : SSH // 윈도우 : Putty
+
+서버 접속 요청 받으면 암호화된 데이터 보냄
+
+1 SSH 서버 설치
+OpenSSH 패키지 설치 확인
+# rpm -qa | grep ssh
+설치가 필요하면 # yum install openssh-server 로 설치
+
+SSH 서비스 시작 및 부팅시 자동실행
+# systemctl start sshd.service
+# systemctl enable sshd.service
+
+SSH 서비스 방화벽 설정 포트 22번 # firewall-config
+
+1 페도라 리눅스에서 접속
+SSH [사용자이름]@[ip주소] -> 로그인 메시지 뜨면 로그인
+첫 접속시 암호 생성 유무 메시지가 뜸 yes 입력해주면됨
+
+2 윈도우 운영체제에서 접속
+윈도우 SSH 클라이언트 프로그램 Putty http://hputty.org 다운 및 설치
+
+3 SSH서버 설치 및 원격 접속 실습
+서버 패키지 설치 여부확인
+[ root@localhost ~] # rpm -qa | grep ssh
+openssh-server 있으면 된거
+없다면  # yum install openssh-server 
+
+SSH 시작
+[ root@localhost ~] # systemctl start sshd.service
+[ root@localhost ~] # systemctl enable sshd.service
+
+SSH 로컬 접속
+[ root@localhost ~] # ssh userid@ip주소
+
+암호 메시지 뜨면 yes 입력
+
+패스워드 입력 하면 로그인 완료
+
+로그아웃
+[ userid@localhost ~] $ logout 
+
+외부 접속을 위한 방화벽 설정
+[ root@localhost ~] # firewall-config
+fedoraworkstation 런타임과 영구적 둘다 해줘야됨 서비스 telnet 체크박스 체크
+
+외부에서 접속 Putty http://hputty.org 
+비설치버전 다운 putty.exe
+Host name 에 ip 주소입력
+포트 22
+
+open 누르면 로그인 메시지
+로그인 완료
+
+암호화가 되는 ssh 권장
+
+VNC
+1 VNC 개요
+x 윈도우 환경을 제공 원격서비스
+서버패키지명 Tigervnc-server
+클라이언트 프로그램 // 페도라 Tigervnc // 윈도우 Tigervnc Viewer
+
+2 VNC서비스 동작   
+x윈도우 환경하에 진행
+
+VNC 서버 설치
+1 VNC 서버 설치
+VNC 서버패키지 페도라에 설치 -> 사용자별 VNC서버 전용 암호설정 -> 사용자별 VNC 서비스시작 -> 방화벽 설정 
+-> VNC클라이언트 패키지 설치 -> VNC 접속 테스트
+
+2  VNC 서버 설치 방법
+페도라 운영체제 패키지설치 # yum install tigervnc-server
+VNC 사용자별 전용 암호 설정 # vncpasswd
+사용자별 VNC 실행 # vncserver:1 :1은 현재 로그인한 사용자의 디스플레이 번호
+VNC 서비스에 대한 방화벽 설정 # firewall-config
+
+VNC 원격접속
+1  VNC 클라이언트 프로그램 설치
+클라이언트 프로그램 TigerVNC http://www.tigervnc.com 에 접속 프로그램 다운
+
+2  VNC 서버 설치 및 원격 접속 실습
+
+tigervnc 페도라25에서 약간의 버그가 있어서 22에서 실습 이후 버그 잡혀서 될수도 있음
+패키지 설치 확인
+[ root@localhost ~] # rpm -qa | grep tiger
+서버 설치
+[ root@localhost ~] # yum install tigervnc-server
+
+사용자별 서버와 패스워드 지정
+[ root@localhost ~] # vncpasswd
+비번 입력
+
+vnc 서버시작
+[ root@localhost ~] # vncserver:1
+실행중인 서버 내용
+[ root@localhost ~] # vncserver -list
+
+방화벽설정
+[ root@localhost ~] # firewall-config
+vnc-server 체크박스 체크 런타임 영구적 둘다
+
+클라이언트 프로그램 다운
+TigerVNC Viewer 다운 http://www.tigervnc.org
+다운로드 링크 깃허브 릴리즈 페이지
+Binaries are 어쩌구 밑 링크
+tigervnc-버전.exe 다운
+
+프로그램 tigervnc Viewer 실행
+VNC server IP주소 입력 디스플레이번호 ex 192.168.135.135:1
+암호 설정
+
+
+
+
+
+
+
+
+
+
+
+

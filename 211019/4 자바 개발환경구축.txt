@@ -1,0 +1,117 @@
+윈도우 자바 개발환경 구축
+
+자바언어 웹프로그래밍 안드로이드 
+
+통합개발환경
+
+이클립스, 안드로이드 스튜디오(안드 앱 제작)
+자바 컴파일이 포함되어 있지 않으므로 JDK 별도 설치
+
+자바 개발환경 구추
+JSP 개발 환경 구축
+윈도우 운영체제에서 JDK설치 및 개발도구 환경 구축
+윈도우 운영체제에서 JSP 개발환경을 구축
+
+자바언어의 역사
+1991 sun microsystems 에서 자바언어개발
+오라클이 인수함
+구글이 중소였던 안드로이드 인수
+
+자바언어 
+객체지향 프로그래밍
+C언어와 문법과 유사함
+C언어, C++언어보다 쉬움
+cross platform 언어 한번 컴파일한 코드는 다른 플랫폼에서도 동일하게 동장
+네트워크 프로그래밍을 위해 편리한 클래스 제공
+보안이 강하고 문법이 엄격하고 견고한 프로그램
+언어 차원의 Multi-Thread지원
+
+자바 바이트 코드 Cross Platform 을 가능하게 해줌
+소스 코드는 작성한 플랫폼에서 컴파일하고 동일한 바이트 코드가 생성되며 JVM에 실행하며 동일한
+결과를 얻음
+
+자바가상머신 JVM 
+소스 코드를 컴파일한 바이트 코드를 실행
+자바 실행 환경 java runtime environment 또는 자바 플러그인 이라고 함
+
+자바 기술
+Java 2 Standard Edition J2SE 데탑 웹 응용프로그램 안드앱
+Java 2 Enterprise Edition J2EE 엔터프라이즈급 응용프로그램
+Java 2 Micro Edition J2ME 사물인터넷 loT 임베디드 시스템 모바일 장치
+
+JDK 자바개발도구모음
+자바 라이브러리 컴파일러 JRE 유틸리티 포함
+
+자바 통합 개발 환경 JDK 설치해야함
+
+종류 이클립스, 안드로이드 스튜디오, 오라클 NetBeans\
+
+JDK 
+오라클에서 JDK다운 설치, 설치된 폴더의 PATH 환경변수 설정 
+cmd 에서 javac 명령 실행으로 확인
+
+path 환경변수 설정
+윈도우 탐색기 C:\Program Files\Java\jdk1.8.0_301\bin
+설정 시스템 정보 고급시스템설정 고급 환경변수 설정 시스템 변수 Path 편집
+변수 값 젤 끝부분에 ; 하나 입력후 C:\Program Files\Java\jdk1.8.0_301\bin 확인
+
+cmd 실행 javac
+
+이클립스 다운 및 설치
+
+get eclipse Neon download 
+Eclipse java developer
+작업폴더 선택 다음부터 나타내지 않도록 선택
+작업 폴더 변경 file 메뉴 Switch Workspace / Others
+작업 폴더 변경하면 이클립스 다시 시작됨
+환경설정 window / preferences
+한글코드 설정 general / workspace / Textfile encoding
+맞춤법 검사 기능 해제 general / editors / Test editors / spelling / enable spell checking 선택해제
+
+import 문장 자동 정리 java / code style / organize imports / Number of imports needed for.* 항목에 1입력
+
+글자 속성 설정 general / appearance / colors and fonts / text fonts
+
+이클립스 활용 java window application 작성
+파일 자바 new java project 생성
+생성된 폴더 src class  public static void 체크
+Test.java
+System.out.println("Hello!");
+저장 후 실행
+
+JSP 개발환경 구축
+HTML 문서 내에 자바코드를 사입하여 웹서버엣 동적으로 
+웹브라우저 JSP 요청 웹서버  JSP 실행 요청 웹애플리케이션 서버  서블릿 컨테이너 JSP 변환 컴파일 및 실행 
+
+웹 어플리케이션 서버 인터넷 상에서 애플리케이션을 실행하는 미들웨어
+대부분 자바 기반 Java EE 표준 수용
+
+WAS 웹 어플 서버 종류
+오픈소스 아파치 톰캣 JBoss
+
+JSP 개발에 필요한 도구
+JDK
+웹 어플리케이션 서버 Tomcat
+Eclipse java for ee
+웹브라우져
+
+Tomcat 설정
+포트 80 user admin password 1234
+Tomcat 이외의 웹서버 종료
+local host 로 확인
+
+IIS 인터넷 정보 서비스 관리자 에서 서버 중지 확인
+
+tomcat.apache.org
+설치 파일 다운 후 설치
+Configuration
+HTTP port 를 80 으로 수정 user admin 비번 1234 로변경
+설치 완료와 동시에 서버 시작
+트레이 아이콘 클릭 
+http://localhost/ 로 해서 톰캣 화면이 나오면 서버 설치 완료
+
+Eclipse Java for ee
+이클립스 설치 Eclipse IDE for Java EE Developers 설치
+Eclipse JeeNeon 으로 나옴
+
+
