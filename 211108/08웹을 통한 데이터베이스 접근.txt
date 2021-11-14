@@ -1,0 +1,213 @@
+응용 SW 기초 활용 기술 part 2
+웹을 통한 데이터베이스 접근
+
+데이터의 수정과 삭제
+웹에서의 데이터베이스 사용
+
+테이블에 저장된 데이터를 수정하고 삭제할 수 있다.
+웹을 통해 데이터베이스에서 데이터베이스에 접근하여 데이터를 조작할 수 있다.
+
+데이터의 수정과 삭제
+
+1. 데이터의 수정
+테이블에 저장되어 있는 데이터를 수정
+	↓
+SQL의 UPDATE문 이용
+
+- UPDATE 테이블명 SET 열1 = 값1, 열2 = 값2, ... WHERE 조건;
+예 UPDATE department SET dep_name='건축공학과' WHERE dep_code='061';
+- WHERE 절은 선택 사항
+- WHERE 절 조건과 일치하는 행의 데이터(열의 값)만을 변경
+!! 만약 WHERE 절을 생략할 경우, 모든 행의 해당 열의 값이 변경되므로 주의해야 함
+
+2. 데이터의 삭제
+테이블에 저장되어 있는 데이터를 삭제
+	↓
+SQL의 DELETE문을 이용
+
+- DELETE FROM 테이블명 WHERE 조건;
+예 DELETE FROM department WHERE dep_code='061';
+- WHERE 절은 선택 사항
+- WHERE 절 조건과 일치하는 행을 삭제
+!! 만약 WHERE 절을 생략할 경우, 테이블 내의 모든 행이 삭제되므로 유의해야 함
+! DELETE문을 이용하면 테이블 내의 모든 데이터가 삭제되어도 테이블은 유지됨
+
+테이블내 데이터 확인
+select * from department;
+
+조건에 의한 데이터 수정
+update 테이블명 set 변경할열이름=값 where 변경할조건;
+update department set dep_name='건축공학과'
+where dep_code='061';
+// where 문 생략시 열의 모든 값이 변경되므로 주의
+
+데이터 삭제 불가
+delete from 테이블명 where 조건;
+delete from department where dep_code='061';
+무결성 제약조건에 의한 데이터 삭제 불가
+
+조건에 의한 데이터 삭제
+참조하고 있는 테이블에서 먼저 해당 데이터를 삭제 후 데이터 삭제 실행
+delet from student where dep_code='061';
+delete from department where dep_code='061';
+삭제 완료
+
+삭제 후 데이터 확인
+select * from department;
+select * from student;
+
+모든 데이터 삭제 
+delete from 테이블;
+delete from student;
+데이터 삭제 = 데이터만 삭제 테이블은 남아있음
+
+웹에서의 데이터베이스 사용
+
+1 개발환경 구축
+1) 개발환경의 이해
+웹 애플리케이션은 다양한 프로그래밍 언어를 이용하여 개발함
+
+웹 애플리케이션	ASP	PHP(사용)	JSP
+
+EasyPHP
+PHP를 이용하여 동적인 웹 페이지를 개발하는 데 필요한 모든 기능을 제공하는 프로그램
+
+Apache Web Server	MySQL		PHP
+
+웹 애플리케이션 개발을 위한 프로그램을 묶어서 제공하므로 최소한의 노력으로 서버를 구동하는 것이 가능함
+
+웹 페이지의 요청/응답 처리 과정
+
+웹 브라우저 인터넷		웹 서버			데이터베이스 서버
+URL 입력	→ 	요청 수신→ 하드디스크에서
+			해당 페이지 획득
+				↓
+			PHP 프로세서에서   →	SQL 실행
+			PHP 처리 	
+					↙	
+			         데이터 수신
+			             ↓
+페이지 출력	←	페이지 응답(구성)
+
+2) 개발환경의 설치
+EasyPHP 설치하기 http://www.easyphp.org/ 에 접속하여 다운로드 후 설치
+EasyPHP 홈페이지
+! 설치 과정 중 오류가 발생한다면, Windows 업데이트를 진행한 후 설치함
+
+Notepad++ 설치하기 https://notepad-plus-plus.org/ 에 접속하여 다운로드 후 설치
+Notepad++ 홈페이지
+
+실습
+EasyPHP
+대쉬보드 // http server start // database server start
+웹 서버의 실행 확인 http://localhost:8080
+기본 제공 php 파일을 통해 확인
+MySQL 데이터베이스 서버 실행확인
+Programfiles86\EasyPHP-Devserver-17\eds-binarie\dbserver\mysql\bin 폴더 내 mysql 실행파일
+
+cmd 실행
+cd..
+cd..
+cd Programfiles86\EasyPHP-Devserver-17\eds-binarie\dbserver\mysql\bin
+폴더로 이동했다면 mysql -u root -p 비번(초기 비번은없으니까 걍 엔터)
+
+프롬프트에 myspl> 커서 깜박 뜨면 서버에 접속된것
+
+show database; 기본 제공 데이터베이스 목록 확인
+
+시스템과 관련된 myspl 사용
+use mysql;
+show tables; 테이블 목록 확인
+
+사용자 계정과 관련된 유저 table 확인
+desc user; 테이블 출력
+
+일부 열의 확인
+select 열1, 열2 from 테이블명;
+select user, password from user;
+
+보안상 root 의 비번 설정
+관리 root 비번 설정 
+update user set password=password('변경할비밀번호') where user='root';
+update user set password=password('1234') where user='root';
+
+변경된 사항의 적용 및 접속 종료
+변경사항 적용
+flush privileges;
+
+접속 종료 exit
+
+다시 mysql -u root -p 하면 비번 입력안했다고 오류뜸
+mysql -u root -p 1234
+show database; 로 접속 확인
+
+쉬운 MySQL 실행위해 환경변수 등록
+테이블 내의 모든 데이터 MySQL 서버와 명령프롬프트 종료: exit -> 
+MySQL 실행파일의 [속성]에서 [위치]복사가 삭제되어도 테이블이 삭제되는 것은 아님
+exit 서버 접속 종료
+cmd 종료
+bin 폴더 내 mysql 실행파일 우클릭해서 파일 위치 복사
+내 pc 우클릭 속성 고급시스템 설정
+환경변수 시스템 변수 path 새로만들기 혹은 편집
+새로 만들기 붙여넣기 확인 확인 적용 
+
+cmd 실행
+mysql -u root -p 
+1234
+로 접속 되는것을 확인
+
+데이터베이스 생성
+create database 데이터베이스명;
+create database library;
+show databases; 생성 확인
+
+사용할 데이터베이스 선택
+use 데이터베이스명;
+show databases; 데이터 베이스 확인 db내 아무것도 없어서 아무것도 안뜸
+
+테이블 생성
+create table 테이블명(열 및 primary key 설정);
+create table customer(
+-> id char(10) not null,
+-> name char(20) not null,
+-> tel char(15) not null,
+-> age int,
+-> grade char(10) not null,
+-> primary key(id)
+-> );
+show databases; 생성 확인
+생성한 테이블 구조 확인
+desc customer;
+
+
+3) 데이터베이스와 테이블 생성
+MySQL
+- 데이터베이스명 : library
+- 테이블의 물리 ERD
+
+2. 데이터 삽입과 수정
+사용자가 요청한 웹 페이지를 구성할 때
+		→SQL문 전달→
+웹 서버					데이터베이스 서버
+	   ←SQL문을 실행한 결과 전달←
+
+데이터 삽입
+- 테이블에 새로운 데이터를 추가 (INSERT INTO)
+예 회원 가입, 게시판의 글쓰기
+
+데이터 수정
+- 테이블의 데이터를 수정(UPDATE)
+예 회원 정보 수정, 게시판의 글 수정
+
+
+학습자료 확인 후 한번더...?
+
+웹에서 데이터베이스를 삭제하고 조회할 때는 삽입하는 코드에서 데이터베이스에 전달하는 SQL문만 변경함
+데이터 삭제
+- 테이블에서 데이터를 삭제(DELETE)
+예 회원 탈퇴, 게시판의 글 삭제
+
+데이터 조회
+- 테이블의 데이터 읽기(SELECT)
+예 회원 정보 확인, 게시판의 글 목록 출력, 글 읽기
+

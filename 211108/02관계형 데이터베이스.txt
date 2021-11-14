@@ -1,0 +1,101 @@
+응용 SW 기초 활용 기술 part 2
+관계형 데이터베이스
+
+학습목표
+Oracle
+MSSQL Server 
+
+Oracle을 설명하고 설치한 후, 접속할 수 있다.
+MSSQL Server를 설명하고 설치한 후, 접속할 수 있다. 
+
+Oracle 
+1. 개요
+제어 기능을 제공하기 위해 유의할 점
+Oracle 사의 데이터베이스 관리 시스템이며, 다양한 운영체제를 지원함
+
+Oracle Database 12c 특징
+1 Cloud 환경 지원
+2 여러 개의 DB를 단일 운영
+3 효율적인 DB 관리
+4 보안 강화
+
+2. 설치
+1 Oracle 설치하기
+Step1 설치 파일 다운로드
+Oracle사 홈페이지 : http://www.oracle.com/kr/index.html
+파일 다운로드를 위해 Oracle사 계정이 필요함
+
+Step2 설치 및 설치 확인
+[Setup.exe] 파일 관리자권한으로 실행
+데이터베이스 설치 옵션
+데스크탑 클래스
+새윈도우즈 사용자생성 username OracleHomeUser, password Welcome_1
+오라클 설치위치 확인
+비밀번호 Oracle_1 이걸로 오라클 시스템에 접속
+설치
+
+설정 시스템 Oracle 설치확인
+오라클 파일 7~8개확인
+
+2 SQL*Plus를 이용하여 Oracle 서버 접속
+Step1 [명령 프롬프트] 실행하기
+시작에서 “명령 프롬프트” 검색
+
+Step2 [SQL*Plus] 실행하기
+“sqlplus”를 입력
+
+Step3 Oracle 접속하기
+사용자 명 : system
+비밀번호 : Oracle_1
+“show user;” 명령어를 입력하여 접속 사용자 확인
+select 구문을 사용하여, 데이터 조회
+
+cmd 
+sqlplus
+system Oracle_1
+show user; 접속자확인
+select count(*) from tabs; 테이블 수 확인
+exit 종료
+
+MSSQL Server
+1. 개요
+Microsoft SQL Server
+Windows 운영 체제를 기반으로 개발되었기 때문에, Windows 운영체제에 최적화
+
+MSSQL Server 2016의 특징
+1 편리한 사용자 인터페이스 제공
+2 보안 강화
+3 사내 데이터센터부터 Cloud까지 일관된 환경을 제공함
+
+2. 설치
+설치 파일 다운로드 및 접속
+Microsoft사 홈페이지에 접속하여 다운로드 진행
+https://www.microsoft.com/ko-kr/sql-server
+
+Express Edition 지금 다운로드
+설치 유형선택 - 사용자 지정 (제공하는 모든 기능)
+SQL Server 설치센터
+새 SQL Servr 독립실행형 설치 또는 기존 설치에 기능 추가
+동의함 다음
+업뎃 거부 
+인스턴스 구성 기본 인스턴스선택
+데이터베이스 엔진구성 Window 인증모드
+Reporting 기본
+R open 설치 동의
+
+
+MSSQL Server 접속
+SSMS(SQL Server Management Studio)를 설치하여 사용
+SSMS : SQL Server의 모든 구성 요소에 접근 · 구성 · 관리 및
+개발할 수 있는 통합 개발환경
+SQL Server Management Studio
+
+SQL Server 설치센터 
+서버 관리도구
+SQL Server Management Studio 다운페이지로 이동
+설치 
+서버 이름 컴퓨터이름
+연결
+
+
+
