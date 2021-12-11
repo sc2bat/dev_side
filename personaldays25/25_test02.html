@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>25_test02</title>
+    <style type="text/css">
+        /*  */
+        #view{position: relative; width:600px; height:400px; margin: 0 auto; border:1px solid black; overflow:hidden;}
+        #imgs{position: absolute; width:4800px; height:400px; left:0; top:0;
+        border:1px solid red;
+        }
+        img{width:600px; height:400px;}
+        #remot{position: relative;width:300px; height:50px; border: 1px solid white;
+        margin: 0 auto; top: 350px; text-align: center;}
+        ul{list-style: none; padding:0px; margin:0px; display: inline-block;}
+        ul li{float: left; width:15px; height:15px; background: white;
+        border-radius: 25%; margin:18px 4px; font-size:70%; font-weight: bold;}
+        .select{background:black; width:30px; color:white;}
+    </style>
+    <script src="script/jquery-3.6.0.js"></script>
+    <script type="text/JavaScript">
+        /*  */
+        $(function(){
+            var num = $(this).index() +1;
+            var dist = (num -2) * -600;
+            var timer;
+            var playing = false;
+            $('#view').hover(
+                function(){
+                    $('li').click(function(){
+                        if(playing==true)return;
+                        $('li').removeClass('select');
+                        if(num > 1 && num < 10){
+                            $('#imgs').animate({left:dist}, 300);
+                            $('li').eq(num-1).addClass('select'); 
+                        }
+                    }); 
+                },
+                function(){
+                    window.clearInterval(timer);
+                },
+                function(){
+                    timer = setInterval(function(){
+                        if(playing == false){
+                            $('#imgs').animate({left:dist}, 500);
+                            $('li:last').html('▶');
+                            playing == true;
+                        }else{
+                            playing == false;
+                            window.clearInterval(timer);
+                        }
+                    }, 1000);
+                });
+        });
+        /*  */
+        $(function(){});
+    </script>
+</head>
+<body>
+    <!--  -->
+    <div id="view">
+        <div id="imgs">
+            <img src="images/Koala.jpg"><img src="images/Chrysanthemum.jpg"><img src="images/Desert.jpg"><img src="images/Hydrangeas.jpg"><img src="images/Jellyfish.jpg"><img src="images/Lighthouse.jpg"><img src="images/Penguins.jpg"><img src="images/Tulips.jpg">
+        </div>
+        <div id="remot">
+            <ul>
+                <li>◁</li>
+                <li>1</li>
+                <li>2</li>
+                <li>3</li>
+                <li>4</li>
+                <li>5</li>
+                <li>6</li>
+                <li>7</li>
+                <li>8</li>
+                <li>▷</li>
+                <li id="btn">■</li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>
