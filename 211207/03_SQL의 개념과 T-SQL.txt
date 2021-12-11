@@ -1,0 +1,237 @@
+
+SQL 의 사용이유
+
+학습내용
+- SQL의 개념
+- T-SQL
+
+학습목표
+- SQL의 특징에 대해 설명할 수 있다.
+- MS-SQL에 존재하는 테이블의 구조를 설명할 수 있다.
+
+
+SQL의 개념
+
+1. SQL의 역사와 특징
+
+SQL의 역사
+
+SEQUEL(Structured English Query Language)
+▷ 1974년, IBM San Jose Lab(현재 IBM Almaden 연구소)
+▷ 최초의 관계형 데이터베이스 관리 시스템 프로토타입인 SystemR을 위한 데이터베이스 언어로 개발됨
+
+SQL
+▷ 1986년 ANSI 에서 관계형 데이터베이스 표준언어로 인증
+▷ SQL 지속적인 개선 진행
+• 1986년 : SQL-86 또는 SQL1
+• 1992년 : SQL/92, SQL-92 또는 SQL2
+• 1999년 : SQL-99 또는 SQL3
+• 2003년 : SQL4, SQL-2003(객체 지향 개념 추가)
+
+SQL의 특징
+① SQL은 무엇인가?
+▷ 종합 데이터베이스 언어 ⇨ 데이터 정의(DDL), 조작(DML), 제어(DCL)
+• 무엇(What) 을 표시하며 어떻게(How)는 표시하지 않음
+• 어떻게는 DBMS가 알아서 처리함
+
+② 왜 관계 대수식 대신 SQL을 사용하는가?
+▷ 관계 대수식 연산자 기호는 키보드로 표기하기 어려움
+
+③ 관계 대수식(Relational Algebra)와 SQL과의 차이점은 무엇인가?
+▷ 관계 대수식
+• Relation
+• 튜플의 집합(Set)
+• 중복을 허용하지 않음
+▷ SQL
+• 튜플의 백(Bag)
+• 튜플들 간의 순서는 없으나 중복을 허용함
+▷ 집합을 유지하려면 SQL의 결과에서 항상 중복되는 내용을 제거해야 함
+▷ 중복을 제거하는 것 = 튜플을 정렬(Sorting)하는 것과 같은 문제임
+▷ 결과 생성 시 시간이 오래 걸림 ⇨ 성능 문제 발생
+
+
+2. SQL 기본 구문
+
+DDL 문 : 데이터 정의문
+
+▷ 테이블 생성 : CREATE 문
+CREATE TABLE 테이블명
+( 속성명 속성타입 [제약조건],
+ 속성명 속성타입,
+ …
+)
+• 제약 조건 : NOT NULL, PRIMARY KEY, UNIQUE
+
+▷ 테이블 삭제 : DROP문
+DROP TABLE 테이블명
+
+예 학생(STUDENT) 테이블을 제거하시오.
+DROP TABLE STUDENT
+
+▷ 테이블 구조 변경 : ALTER문
+• 속성 추가
+ALTER TABLE 테이블명(ADD 속성명 속성타입)
+• 속성 제거
+ALTER TABLE 테이블명(DROP 속성명 속성타입)
+• 속성 타입 변경
+ALTER TABLE 테이블명(ALTER 속성명 속성타입)
+
+DML 문 : 데이터 조작문
+
+▷ 튜플 삽입 : INSERT 문
+INSERT INTO 테이블명(속성명, 속성명, ... )
+VALUES (속성값, 속성값,…)
+
+▷ 튜플 변경 : UPDATE문
+UPDATE 테이블명
+SET 속성명= 수식
+[WHERE 조건]
+
+▷ 튜플 삭제 : DELETE문
+DELETE FROM 테이블명
+[WHERE 조건]
+
+▷ 트랜잭션 관련
+SELECT 속성명, 속성명,…
+FROM 테이블명
+[WHERE 조건]
+
+DCL 문 : 데이터 제어문
+
+▷ 트랜잭션 관련
+COMMIT
+ROLLBACK
+
+▷ 사용자 권한 제어 관련
+GRANT 권한부여
+REVOKE 부여한 권한을 취소
+DENY 권한 거부
+
+T-SQL 
+
+1. MS-SQL
+
+상업용 DBMS들
+DBMS 		DBMS 				특징
+Access 		Microsoft 			윈도우즈 플랫폼으로 중소 규모 데이터베이스를 위한 데스크톱용 DBMS
+SQL 		Server Microsoft 	저렴한 제품 가격으로 Windows NT 플랫폼에서 최적의 성능을 발휘
+Informix 	IBM 				성능이 뛰어나며 병렬처리를 위한 멀티스레드(Multithread)를 지원
+DB2 		IBM 				다수 사용자가 다수 관계형 데이터베이스를 동시에 접근할 수 있는 대형 
+								데이터베이스를 위한 시스템
+Oracle 		Oracle 				PC급에서 메인프레임급까지 모두 설치할 수 있으며, 
+								분산처리 지원 기능이 우수함
+MySQL 		MySQL AB 			다양한 플랫폼과 API를 지원하는 비상업용 DBMS
+
+MS-SQL Editions
+▷ MS-SQL Server
+• Microsoft에서 제공하는 데이터베이스 관리 시스템
+▷ Edition 종류
+• Express
+• Workgroup
+• Standard
+• Enterprise
+실습에서는 MS SQL Server 2014 Express versions/
+
+2. MS-SQL의 설치와 구동
+
+MS-SQL 받기
+▷ URL 접속
+https://docs.microsoft.com/en-us/previous-versions/dn934196(v=msdn.10)?redirectedfrom=MSDN#
+
+① 64bit 운영체제 사용시에는 “도구의 64비트와 SQL 서버 2014 익스프레스” 선택 
+② 웹페이지 하단의 “동의함” 단추를 선택하여 MS-SQL 설치 파일 
+
+다운로드
+- 32bit의 경우: SQLEXPRWT_x86_KOR.exe
+- 64bit의 경우: SQLEXPRWT_x64_KOR.exe
+
+MS-SQL 설치
+① 새 SQL Server 독립 실행형 설치 또는 기존 설치에 기능 추가 선택
+② 사용 조건 - 사용조건 확인 후 동의 체크, 다음 버튼 선택
+③ 기능 선택 - 설치할 Express 기능 선택 후 다음 버튼 선택
+④ 인스턴스 구성 - 기본 인스턴스 선택 후 다음 버튼 선택
+⑤ 서버구성 - SQL Server 데이터베이스 엔진 시작유형 자동으로 설정한 후 다음 버튼 선택
+⑥ 데이터베이스 엔진 구성 - SQL Server 관리자 지정 후 다음 버튼 선택
+⑦ 설치 확인 후 닫기
+
+MS-SQL 구동 
+
+Database
+▷ System Database
+• master : 시스템 관리용
+• model : 새 데이터베이스 생성을 위한 틀
+• msdb : SQL Sever agent를 위한 데이터베이스
+• tempdb : 질의 임시결과 유지를 위한 테이블
+
+▷ User Database
+• SSMS 이나 T-SQL(SQL of MS SQL)을 이용해서 생성
+
+테이블 구조 파악
+데이터베이스 내에 있는 테이블의 구조는 개체 탐색기를 이용하여 손쉽게 파악이 가능함
+
+
+핵심요약
+1. SQL의 개념
+SQL의 역사
+
+▷ SEQUEL(Structured English Query Language)
+- 1974년, IBM San Jose Lab(현재 IBM Almaden 연구소)
+- 최초의 관계형 데이터베이스 관리 시스템 프로토타입인 SystemR을 위한 데이타베이스 언어로 개발됨
+▷ SQL
+- 1986년 ANSI 에서 관계형 데이터베이스 표준언어로 인증
+
+SQL의 특징
+▷ SQL이란?
+- 종합 데이터베이스 언어
+- 데이터 정의(DDL), 조작(DML), 제어(DCL)
+- 무엇(What) 을 표시하며 어떻게(How)는 표시하지 않음
+- 어떻게는 DBMS가 처리함
+
+
+SQL의 기본 구문
+
+DDL 문 : 데이터 정의문
+- 테이블 생성 : CREATE 문
+CREATE TABLE 테이블명
+( 속성명 속성타입 [제약조건],
+ 속성명 속성타입,
+ …
+)
+- 테이블 삭제 : DROP문
+DROP TABLE 테이블명
+
+DDL 문 : 데이터 정의문
+- 테이블 구조 변경 : ALTER문
+▷ 속성 추가
+ALTER TABLE 테이블명(ADD 속성명 속성타입)
+▷ 속성 제거
+ALTER TABLE 테이블명 (DROP 속성명 속성타입)
+▷ 속성 타입 변경
+ALTER TABLE 테이블명 (ALTER 속성명 속성타입)
+
+2. T-SQL
+
+MS-SQL(MS-SQL Editions)
+
+MS-SQL Server
+- Microsoft에서 제공하는 데이터베이스 관리 시스템
+
+Edition의 종류
+- Express
+- Workgroup
+- Standard
+- Enterprise
+
+MS-SQL의 설치와 구동
+
+MS-SQL 구동 - Database
+
+- System Database
+▷ master : 시스템 관리용
+▷ model : 새 데이터베이스 생성을 위한 틀
+▷ msdb : SQL Sever agent를 위한 데이터베이스
+▷ tempdb : 질의 임시결과 유지를 위한 테이블
+
+- User Database
+▷ SSMS 이나 T-SQL(SQL of MS SQL)을 이용해서 생성
+

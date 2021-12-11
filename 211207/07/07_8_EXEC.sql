@@ -1,0 +1,6 @@
+USE MagicCorp
+GO
+
+SELECT * FROM DEPARTMENT
+
+EXEC sp_help DEPTEST

@@ -1,0 +1,5 @@
+USE MagicCorp
+GO
+
+INSERT INTO EMPTEST(ENO, ENAME)
+VALUES(51, 'Ω…√ª¿Ã')

@@ -1,0 +1,11 @@
+USE MagicCorp
+GO
+
+CREATE TABLE DEPT01(
+DNO INT,
+DNAME VARCHAR(20),
+ADDRESS VARCHAR(20)
+)
+
+INSERT INTO DEPT01
+VALUES (200, 'dept001', 'seoul'), (210, 'dept002', 'sangju')
