@@ -1,0 +1,4 @@
+USE MagicCorp
+GO
+
+DROP TABLE DEPT01

@@ -1,0 +1,214 @@
+
+
+순위 계산
+
+학습내용 
+▷ 순위 함수
+▷ 그룹 별 순위
+
+학습목표
+▷ 질의 결과에 순위를 지정하는 순위 함수를 사용하여 순위를 추출할 수 있다.
+▷ 순위 함수를 적용하여 그룹별 순위를 부여할 수 있다.
+
+순위 함수
+
+1. TOP() 함수
+
+◈ 질의 결과 튜플 수의 제한
+▷ 질의 결과는 ORDER BY 절을 이용하여 정렬할 수 있음
+▷ ORDER BY 정렬 기준에서 특정 등수 / 비율까지만 보고 싶은 경우
+	⇨ Top(n) 함수를 이용함
+	SELECT TOP(n) 속성명
+	…
+	ORDER BY 속성명
+Q 사원들 중 급여 기준 5등까지만 결과로 출력하기
+
+  - 5등에 동률이 있을 경우 임의로 한 개만 출력함
+
+◈ 동률이 있을 때 모두 보고 싶은 경우
+▷ WITH TIES를 사용함
+	SELECT TOP(n) WITH TIES 속성명
+	…
+	ORDER BY 속성명
+Q 사원들 중 급여 기준 5등까지만 결과로 출력하기
+  
+  - 5등에 동률이 있을 경우 모두 출력함
+
+◈ 정렬 기준 특정 비율까지만 보고 싶은 경우
+▷ Top(n) PERCENT를 이용함
+▷ 상위 n%까지만을 출력하게 됨
+	SELECT TOP(n) PERCENT [WITH TIES] 속성명
+	…
+	ORDER BY 속성명
+	
+Q 사원들 중 급여 기준 20%까지만 결과로 출력하기
+
+
+2. RANK() 함수
+
+	TOP() 함수를 쓰면 결과 수를 제한함
+  - TOP() 함수는 등수를 구할 수 없음
+◈ RANK 함수
+  - 각 튜플에 등수를 표시함
+	RANK 함수 over (order by 속성명 [asc|desc] )
+  - 속성 기준 오름차순(asc)또는 내림차순(desc)으로 정렬된 상태에 대하여 등수 지정
+  - 다양함 RANK 함수가 있음
+◈ RANK() 함수
+	SELECT 속성명, RANK () OVER (ORDER BY 속성명 [asc|desc] )
+▷ 동률에 대하여 동일 등수 배정
+▷ 비연속식 등수 배정
+예 1,2,2,4,…
+Q 사원에 대하여 이름, 급여, 급여에 대한 내림차순 RANK() 값 출력하기
+
+◈ DENSE_RANK() 함수
+	SELECT 속성명, DENSE_RANK () OVER (ORDER BY 속성명)
+▷ 동률에 대하여 동일 등수 배정
+▷ 연속식 등수 배정
+예 1,2,2,3,…
+Q 사원에 대하여 이름, 급여, 급여에 대한 DENSE_RANK() 값 출력하기
+
+◈ ROW_NUMBER() 함수
+	SELECT 속성명, ROW_NUMBER () OVER (ORDER BY 속성명)
+▷ 동률에 대하여 임의 등수 배정
+▷ 연속식 등수 배정
+예 1,2,3,4,…
+Q 사원에 대하여 이름, 급여, 급여에 대한 ROW_NUMBER() 값 출력하기
+
+◈ NTILE(n) 함수
+▷ 전체 튜플을 n개로 균등 분할하여 순위 지정
+	예 
+	• 결과 튜플이 20개이고 n이 10이면, 1등 2개, 2등 2개, …, 10등 2개로 등수 지정
+	• 결과 튜플수가 n으로 나누어 떨어지지 않으면 1등부터 추가적으로 배정함
+	• 결과 튜플이 22개이고 n이 10이면 1등 3개, 2등 3개, 3등 2개, …, 10등 2개로 등수 지정
+Q 사원에 대하여 이름, 급여, 급여에 대한 내림차순으로 5등분 하여 등분순위 출력하기
+
+그룹 별 순위
+
+1. 그룹 별 순위 지정
+
+◈ 기존 RANK() 함수 문법
+▷ 전체 결과에 대한 속성값 기준 등수 지정이 됨
+  - 특정 그룹별 순위 지정은 어떻게 할까?
+	• 부서별로 구분해서 각 부서 내에서 봉급 순위를 알아봄
+
+◈ PARTITION BY 속성명
+▷ 튜플들을 속성값에 따라서 그룹핑함
+▷ 각 그룹에 대하여 순위 함수를 적용함
+	RANK() over (PARTITION BY dno ORDER BY salary desc)
+  - “DNO별로 분류하고 각 분류된 소그룹에서 salary기준 내림차순하고 순위를 나타내시오.”라는 의미임
+  
+Q DNO별로 분류하고 각 분류된 소그룹에서 salary기준 내림차순하고 순위 나타내기
+
+◈ 그룹별 특정 등수의 정보를 보고 싶은 경우
+▷ WHERE 절을 같이 활용함
+	RANK() over (PARTITION BY dno ORDER BY salary desc) AS 속성명
+	…
+	WHERE 속성명 = 등수
+	
+Q 각 부서에서 급여 순위 2등인 사원의 부서번호, 이름과 급여 출력하기
+  - 인라인 뷰를 사용함
+
+2. 그룹 별 집단 함수
+
+◈ 그룹 별 집단 함수의 적용
+	SELECT 집단 함수 ~ GROUP BY~
+	
+◈ PARTITION BY를 이용해서도 그룹 별 집단 함수를 적용할 수 있음
+	SELECT 집단함수() OVER (PARTITION BY 속성명)
+Q PARTITION BY를 이용하여 부서별 급여의 평균 출력하기
+
+3. 행 순서 함수
+
+◈ 행 순서 함수란?
+▷ 행 순서 함수 : 정렬된 대상에서 특정 순위의 튜플들을 추출할 필요가 있을 때 사용되는 함수
+  - FIRST_VALUE 함수
+	• 정렬 대상에서 첫 번째 데이터 추출
+  - LAG / LEAD 함수
+	• 지정된 순서에서 선행 / 후행 데이터를 참조하는 함수
+
+◈ FIRST_VALUE 함수
+Q 각 부서별 최고 급여액 출력하기
+
+◈ LAG / LEAD 함수
+▷ 정렬 기준 선행 값 / 후행 값을 추출함
+Q 각 사원별 이름, 급여와 급여 순위 상 선행 순위의 급여, 급여 순위 상 후행 순위의 급여 출력하기
+
+핵심요약 
+
+1. 순위 함수
+◈ Top 함수
+▷ 질의 결과 튜플 수의 제한
+- 질의 결과는 ORDER BY 절의 이용하여 정렬할 수 있음
+- ORDER BY 정렬 기준에서 특정 등수 / 비율까지만 보고 싶은 경우
+- Top(n) 함수를 이용함
+	SELECT TOP(n) 속성명
+	…
+	ORDER BY 속성명
+- 동률이 있을 때 모두 보고 싶은 경우
+- WITH TIES를 사용함
+	SELECT TOP(n) WITH TIES 속성명
+	…
+	ORDER BY 속성명
+	
+▷ 정렬 기준 특정 비율까지만 보고 싶은 경우
+- Top(n) PERCENT를 이용함
+- 상위 n%까지만을 출력하게 됨
+- WITH TIES와도 같이 쓸 수 있음
+	SELECT TOP(n) PERCENT [WITH TIES] 속성명
+	…
+	ORDER BY 속성명
+
+◈ RANK 함수
+▷ TOP() 함수를 쓰면 결과 수를 제한함
+▷ TOP() 함수는 등수를 구할 수 없음
+▷ RANK 함수 : 각 튜플에 등수를 표시함
+	RANK함수 over (order by 속성명 [asc|desc] )
+
+▷ RANK() 함수
+	SELECT 속성명, RANK () OVER (ORDER BY 속성명 [asc|desc] )
+- 동률에 대하여 동일 등수 배정
+- 비연속식 등수 배정
+
+▷ DENSE_RANK() 함수
+	SELECT 속성명, DENSE_RANK () OVER (ORDER BY 속성명)
+- 동률에 대하여 동일 등수 배정
+- 연속식 등수 배정
+
+▷ ROW_NUMBER() 함수
+	SELECT 속성명, ROW_NUMBER () OVER (ORDER BY 속성명)
+- 동률에 대하여 임의 등수 배정
+- 연속식 등수 배정
+
+▷ NTILE(n) 함수
+- 전체 튜플을 num개로 균등 분할하여 순위 지정
+
+2. 그룹 별 순위
+◈ 그룹 별 순위 지정
+
+▷ 기존 RANK함수 문법
+- 전체 결과에 대한 속성값 기준 등수 지정이 됨
+▷ PARTITION BY 속성명
+
+- 튜플들을 속성값에 따라서 그룹핑함
+- 각 그룹에 대하여 순위 함수를 적용함
+	RANK() over (PARTITION BY dno ORDER BY salary desc)
+	
+▷ 그룹별 특정 등수의 정보를 보고 싶은 경우
+- WHERE 절을 같이 활용함
+	RANK() over (PARTITION BY dno ORDER BY salary desc) AS 속성명
+	…
+	WHERE 속성명 = 등수
+	
+◈ 그룹 별 집단 함수
+▷ 그룹 별 집단 함수의 적용
+	SELECT 집단 함수 ~ GROUP BY~
+
+▷ PARTITION BY를 이용해서도 그룹 별 집단 함수를 적용할 수 있음
+	SELECT 집단함수() OVER (PARTITION BY 속성명)
+
+◈ 행 순서 함수
+▷ 정렬된 대상에서 특정 순위의 튜플들을 추출할 필요가 있을 때 사용되는 함수
+▷ FIRST_VALUE 함수
+- 정렬 대상에서 첫 번째 데이터 추출
+▷ LAG / LEAD 함수
+- 지정된 순서에서 선행 / 후행 데이터를 참조하는 함수
