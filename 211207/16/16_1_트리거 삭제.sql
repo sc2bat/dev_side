@@ -1,0 +1,4 @@
+USE MagicCorp
+GO
+
+DROP TRIGGER NEW_EMP_SAL

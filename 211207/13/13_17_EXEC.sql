@@ -1,0 +1,4 @@
+USE MagicCorp
+GO
+
+EXEC SP_HELPTEXT EMP30
