@@ -1,0 +1,206 @@
+
+09_Django Framework의 개념 파악하기
+
+학습내용
+▪ Django란?
+▪ Django 설치하기
+▪ 프로젝트 구조 파악
+
+학습목표
+▪ Django Framework에 대해 설명할 수 있다.
+▪ Django Framework의 설치 방법에 대해 설명할 수 있다.
+▪ Django Framework의 기본 프로젝트 구조에 대해 파악할 수 있다.
+
+Django란?
+
+1 Python언어에 대한 이해
+
+◈ 1 스크립트 언어
+1 컴파일(Compile) 방식의 언어에 의해 작성되는 응용 프로그램은 컴파일러에 의해 기계어로 번역된 채로 실행되기 때문에, 
+수정이 빈번하게 발생할 경우 수정 후 다시 컴파일을 해야 함
+2 수정이 빈번하게 발생하는 경우에는 소스 코드를 한 줄 한 줄 읽어 바로바로 실행하는 인터프리터 방식이 상당히 유리함
+3 스크립트 소스코드를 컴파일 방식에 의해 중간 코드(Bytecode)로 우선 만들고, 이를 다시 인터프리터 방식으로 해석하여 수행하는 방법도 종종 활용
+
+◈ 2 스크립트 언어의 장단점
+장점
+▪ 개발 시간 단축
+▪ 소스 코드 수정이 빠르고 간단하게 이루어짐
+
+
+단점
+▪ 중간 코드를 만드는 것은 간단하지만 실제로 실행시키는 것은 많은 작업을 필요로 함
+▪ 실행 시간이 오래 걸림
+
+◈ 3 Python의 특징
+• 대화 기능의 인터프리터 언어
+• 동적인 데이터 타입 결정 지원
+• 들여쓰기 기반의 간단하고 쉬운 문법
+• 많은 수의 라이브러리 제공
+• 높은 확장성
+
+2 Django Framework
+
+	!Django Framework
+▪ 대표적인 Python기반 웹 어플리케이션 프레임워크
+▪ 2003-2005년 신문사 웹 개발팀의 프로젝트를 공개
+▪ 무료 오픈소스
+
+▷ Django Framework의 특징
+- MTV(Model, Template, View) 패턴에 의한 설계
+	MVC에서 Controller ➔ View, View ➔ Template과 같은 개념
+	
+- Admin Site
+	모델, 데이터베이스 관계에 대한 관리 기능 자동 제공
+
+- Elegant URL 
+	정규식 기반으로 규격화된 URL형태를 결정
+
+- Object-Related Mapping
+	객체를 데이터베이스에 맵핑시켜 유연하게 연동
+	
+-  Template
+	템플릿에 의해 재사용성을 높인 View 코드
+
+Django 설치하기
+
+1 Python 설치하기
+
+▷ Python 설치
+
+https://www.python.org 접속
+
+3.7.0 버전 다운로드
+
+Add Python 3.7 to PATH’ 체크 후 ‘Install Now’ 클릭
+
+콘솔창에 ‘Python’ 입력 후 실행 확인
+
+
+2 Django 설치하기
+
+◈ 1 Django 설치
+
+콘솔창에 ‘pip install Django==1.11.5’ 입력 후 설치 성공 확인
+
+Django 설치 성공 확인
+
+◈ 2 Django 프로젝트 생성
+프로젝트 워크스페이스 폴더 (예 : C:\Django) 생성
+
+해당 폴더로 이동 후 ‘django-admin startproject 프로젝트명’ 입력
+
+Django 프로젝트 생성 화면
+
+
+◈ 3 Django 서버 실행
+1 프로젝트 폴더(C:\Django\mysite)로 이동 후 ‘python manage.py runserver’ 입력
+
+Django 서버 실행 화면
+
+2 브라우저를 실행한 후 주소창에 http://127.0.0.1:8000/ 입력
+
+브라우저에서 Django 서버 실행 확인
+
+◈ 4 Django 어플리케이션 생성
+콘솔창에서 프로젝트 폴더로 이동
+‘python manage.py startapp 어플리케이션명’ 입력
+settings.py 파일의 ‘INSTALLED_APPS’에 ‘어플리케이션명’ 입력
+
+INSTALLED_APPS = [
+'django.contrib.admin',
+'django.contrib.auth',
+'django.contrib.contenttypes',
+'django.contrib.sessions',
+'django.contrib.messages',
+'django.contrib.staticfiles',
+'polls',
+]
+
+
+Django 어플리케이션 생성 화면
+
+◈ 5 Django Admin 설정
+
+콘솔창에서 프로젝트 폴더로 이동
+‘python manage.py createsuperuser’ 입력
+Email Address와 Password 입력
+브라우저에서 http://127.0.0.1:8000/admin 입력 후 로그인
+Admin 화면 확인
+
+Django Admin 설정 화면
+
+Django Admin 화면
+
+프로젝트 구조 파악
+
+1 프로젝트 폴더 구조
+
+프로젝트
+	개발 대상이 되는 전체 프로그램
+
+어플리케이션
+	▪ 프로젝트를 몇 개의 기능 그룹으로 나눌 때, 프로젝트 하위의 서브 프로그램
+	▪ 하나의 어플리케이션은 여러 개의 프로젝트에 포함될 수 있음
+
+mysite
+∟db.sqlite3
+∟ manage.py
+∟ mysite -> 프로젝트명
+∟ __init__.py
+∟ settings.py
+∟ urls.py
+∟ wsgi.py
+∟ polls -> 어플리케이션명
+∟ __init__.py
+∟ admin.py
+∟ migrations
+∟ __init__.py
+∟ models.py
+∟ tests.py
+∟ views.py
+
+2 주요 파일
+▷ 프로젝트 주요 파일 설명
+파일명 			설명
+manage.py 		장고 명령어 처리
+__init__.py 	파이썬 패키지임을 인식
+settings.py 	프로젝트 설정
+db.sqlite3 		SQLite3 데이터베이스 파일
+urls.py 		URL패턴 정의
+admins.py 		Admin 사이트 설정 파일
+models.py 		모델 클래스 정의 파일
+views.py		뷰 정의 파일
+
+1. Django 란?
+• Python 언어에 대한 이해
+- 대화 기능의 인터프리터 언어로 동적인 데이터 타입 결정 지원
+- 들여쓰기 기반의 간단하고 쉬운 문법과 많은 수의 라이브러리 제공
+- 높은 확장성
+
+• Django Framework
+- 대표적인 Python 기반 웹 어플리케이션 프레임워크
+- 2003-2005년 신문사 웹 개발팀의 프로젝트를 공개
+- 무료 오픈소스
+
+2. Django 설치하기
+• Python 설치하기
+- https://www.python.org 접속
+- 3.7.0 버전 다운로드
+- ‘Add Python 3.7 to PATH’ 체크 후 ‘Install Now’ 클릭
+- 콘솔창에 ‘python’ 입력 후 실행 확인
+
+• Django 설치하기
+- 콘솔 창에 ‘pip install Django==1.11.5’ 입력 후 설치 성공 확인
+- Django 프로젝트 생성
+- Django 서버 실행
+- Django 어플리케이션 생성
+- Django admin 설정
+
+3. 프로젝트 구조 파악
+• 프로젝트
+- 개발 대상이 되는 전체 프로그램
+
+• 어플리케이션
+- 프로젝트를 몇 개의 기능 그룹으로 나눌 때, 프로젝트 하위의 서브 프로그램
+- 하나의 어플리케이션은 여러 개의 프로젝트에 포함될 수 있음
+
